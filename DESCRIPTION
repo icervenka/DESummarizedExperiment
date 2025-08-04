@@ -20,7 +20,10 @@ BugReports: https://github.com/icervenka/DESummarizedExperiment/issues
 Depends:
     R (>= 4.4)
 Imports: 
-  dplyr
+    dplyr,
+    methods,
+    S4Vectors,
+    SingleCellExperiment
 Suggests:
     BiocStyle,
     knitr,
