@@ -3,6 +3,59 @@ Your tasks: scaffold, implement, document, test, and refactor R code so that the
 
 The package has not yet been published and does not have any users; remove functionality outright when it's no longer needed rather than beginning a deprecation process. No need to worry about breaking changes.
 
+# Package-level vision
+
+DESummarizedExperiment (DE-SE) extends SingleCellExperiment, giving you everything in SummarizedExperiment plus the reduced-dimension infrastructure that SCE already implements. The class is intended to be the one-stop container for bulk RNA-seq and label-free proteomics workflows that end in differential-expression (DE) and pathway-enrichment (PE) analyses.
+
+# Function map
+
+## Core class & validity
+- **Purpose:** Define the object and its integrity checks.
+- **Key functions/generics:**
+    `setClass("DESummarizedExperiment", …)`
+    `DESummarizedExperiment()` – constructor
+    `validDESummarizedExperiment()`
+## Accessors (get / set)
+- **Purpose:** Retrieve or replace parts of the object.
+- **Key functions/generics:**
+    - `deResults()`, `pathwayResults()`
+    - `design()`, `contrasts()`
+    - Standard `assays()`, `rowData()`, `colData()`, `metadata()`
+    - `reducedDims()`
+    - `[[` / `[[<-` wrappers
+## Differential-expression (DE) wrappers
+- **Purpose:** Run DE analyses and store results.
+- **Key functions/generics:**
+    - `runEdgeR()`
+    - `runLimma()`
+    - `runDESeq()`
+    - `runDE(method = c("edgeR", "limma", "DESeq"))`
+## Pathway-enrichment (PE) wrappers
+- **Purpose:** Perform pathway or gene-set enrichment and save outputs.
+- **Key functions/generics:**
+    - `runGSEA()`
+    - `runCamera()`
+    - `runClusterProfiler()`
+    - `runPathway(method = c("GSEA", "camera", "clusterProfiler"))`
+## Utility / transformation
+- **Purpose:** Object manipulation, import/export, and bookkeeping.
+- **Key functions/generics:**
+    - `exportResults()`
+    - `importDE()`
+    - `mergeDESummarizedExperiment()`
+    - `updateDEmetadata()`
+    - Overloads for `subset()`, `[`, `[[`
+    - `as(se, "SummarizedExperiment")`
+## Developer (internal) helpers
+- **Purpose:** Re-usable internal utilities; not exported.
+- **Representative helpers:
+	- **`.contrastToSamples()`
+	- `.tidyContrasts()`
+	- `.checkAssayCompatibility()`
+	- `.writeToRowData()`
+	- `.logMessage()`
+
+
 # Agent system overview
 
 | Agent Name         | Role                              | Depends On                   |
@@ -325,7 +378,7 @@ mypkg/
 └─ .Rbuildignore      # ignore lists (e.g. README cache, dev scripts)
 ```
 
-#  Coding Style
+# Coding Style
 
 * **Follow the tidyverse style guide**.
 * One exported function per file; helpers are unexported.
@@ -342,7 +395,7 @@ mypkg/
 - Composition as the primary mechanism for code reuse
 - Avoid heavy FP abstractions (no need for complex monads or pipe/compose patterns) unless there is a clear advantage to using them
 
-### SOLID in R
+## SOLID in R
 
 | Principle                 | Concrete R‑package Application                                             |
 | ------------------------- | -------------------------------------------------------------------------- |
@@ -360,7 +413,7 @@ mypkg/
 * Place a single blank line between function definitions; none at file end.
 * Alphabetise arguments in function signatures when logical.
 
-#  Refactoring Guidelines
+# Refactoring Guidelines
 
 - DRY (Don't Repeat Yourself) is about not duplicating knowledge in the system, not about eliminating all code that looks similar
 - Refactoring must never break existing consumers of your code
@@ -395,7 +448,7 @@ mypkg/
 * Long pipelines > 5 verbs without intermediate variables.
 * Suppressing warnings/errors unless asserted.
 
-#  Common Anti‑Patterns
+# Common Anti‑Patterns
 
 | Anti‑Pattern                                | Remedy                                              |
 | ------------------------------------------- | --------------------------------------------------- |
