@@ -1,0 +1,35 @@
+Package: DESummarizedExperiment
+Title: S4 Classes for Differential Expression and Pathway Analysis
+Version: 0.0.0.9000
+Version: 0.99.1
+Authors@R:
+   c(
+    person(
+        "Igor", "Cervenka", , "igor.cervenka@unibas.ch", role = c("aut", "cre"), 
+        comment = c(ORCID = "0000-0002-9438-5161")
+    ),
+    person(
+        "Robert", "Ivanek", , "robert.ivanek@unibas.ch", role = c("aut"), 
+        comment = c(ORCID = "0000-0002-8403-056X")
+    )
+   )
+Description: What the package does (one paragraph).
+License: Artistic-2.0
+URL: https://github.com/icervenka/DESummarizedExperiment
+BugReports: https://github.com/icervenka/DESummarizedExperiment/issues
+Depends:
+    R (>= 4.4)
+Imports: 
+  dplyr
+Suggests:
+    BiocStyle,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+biocViews: Software
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
